@@ -1,0 +1,5 @@
+capas,neuronas,epocas,momentum,learning_rate,instancias_correctamente_clasificadas
+1,8,809,34,21,88.6179
+2,10,379,25,14,88.6179
+1,12,909,25,22,89.5787
+3,14,1005,34,24,88.0266
