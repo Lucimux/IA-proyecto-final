@@ -24,7 +24,7 @@ class geneticAlgorithm():
         with open("resultado.csv", 'r', newline='') as f_input:
             csv_input = csv.reader(f_input)
             next(csv_input)
-            sortedData = sorted(csv_input, key=lambda row: (row[-1]), reverse=True)
+            sortedData = sorted(csv_input, key=lambda row: (row[-1]), reverse=False)
         return sortedData
         
     def showGraph(self, data):
@@ -91,15 +91,41 @@ class geneticAlgorithm():
         yHalf = y[half:]    
         newChild = "".join([ str(xHalf[index]) + str(yHalf[index]) for index in range(0, half) ])
         return newChild
-                
+
+def generations():
+    number_of_generations = int(input("Numero de generaciones: "))
+    genetic = geneticAlgorithm() 
+    new_generations = []    
+    for generation in range(0, number_of_generations):
+        new_generations.append({ 
+            'generation_number': generation,
+            'descendents': genetic.generateDecentens()
+        })     
+    for row in new_generations:
+        print("Generacion {0} : {1}".format(row['generation_number'], row['descendents']))
+
+    option = input("Desea guardar el resultado en el archivo resultado.csv ? S/N")
+    if option in ['s', 'S']:
+        with open("resultado.csv", "a") as csvfile:
+            result = csv.writer(csvfile, delimiter=',')
+            for row in new_generations:            
+                result.writerows(row['descendents'])
+
+def switch(option):
+    genetic = geneticAlgorithm()   
+    if option == "1":
+        generations()
+    if option == "2":
+        genetic.showGraph(genetic.sortData())
+    else: 
+        print("Saliendo")    
+
 if __name__ == "__main__":
-    genetic = geneticAlgorithm()
     
-    print("Resultado de la generacion")
-    for row in genetic.generateDecentens():
-        print(row)
-    
-    # genetic.showGraph(genetic.sortData())
+    print("Que desea hacer ? \n 1.- Generar individuos  \n 2.- Mostrar grafica \n 3.- Salir")
+    option = input("Ingrese opcion: ")
+    switch(option)
     
     
+
     
